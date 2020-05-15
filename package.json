@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "SET NODE_ENV=production & node server",
-    "dev": "nodemon server"
+    "dev": "SET NODE_ENV=development & nodemon server"
   },
   "author": "ek",
   "license": "MIT",

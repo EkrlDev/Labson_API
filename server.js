@@ -4,6 +4,7 @@ const todos = [
   { id: 1, text: 'Todo1' },
   { id: 2, text: 'Todo2' },
   { id: 3, text: 'Todo3' },
+  { id: 4, text: 'Todo4' },
 ];
 
 const server = http.createServer((req, res) => {
