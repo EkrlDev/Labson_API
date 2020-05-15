@@ -1,14 +1,30 @@
-const express = require('express');
-const dotenv = require('dotenv');
+const http = require('http');
 
-//In order to use those config files we need to load env vars
-dotenv.config({ path: './config/config.env' });
+const todos = [
+  { id: 1, text: 'Todo1' },
+  { id: 2, text: 'Todo2' },
+  { id: 3, text: 'Todo3' },
+  { id: 4, text: 'Todo4' },
+];
 
-const app = express();
+const server = http.createServer((req, res) => {
+  const { headers, url, method } = req;
+  //console.log(headers, url, method);
+  //sending header
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+  });
 
-const PORT = process.env.PORT || 5000;
+  console.log(req.headers.authorization);
 
-app.listen(
-  PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-);
+  res.end(
+    JSON.stringify({
+      success: true,
+      data: todos,
+    })
+  );
+});
+
+const PORT = 3000;
+
+server.listen(PORT, () => console.log(`Server running on ${PORT}`));
