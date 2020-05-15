@@ -10,6 +10,7 @@ const todos = [
 const server = http.createServer((req, res) => {
   const { headers, url, method } = req;
   //console.log(headers, url, method);
+
   //sending header
   res.writeHead(200, {
     'Content-Type': 'application/json',
@@ -25,6 +26,6 @@ const server = http.createServer((req, res) => {
   );
 });
 
-const PORT = 3000;
+const PORT = 5000;
 
 server.listen(PORT, () => console.log(`Server running on ${PORT}`));

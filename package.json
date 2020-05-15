@@ -4,8 +4,7 @@
   "description": "backend API",
   "main": "server.js",
   "scripts": {
-    "start": "SET NODE_ENV=production & node server",
-    "dev": "SET NODE_ENV=development & nodemon server"
+    "start": "nodemon server.js"
   },
   "author": "ek",
   "license": "MIT",
