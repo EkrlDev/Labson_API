@@ -1,5 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
+//const logger = require('./middleware/logger'); we defined our custom middleware but we don't use it
+const morgan = require('morgan');
 
 //Initialise Routing files
 const bootcamps = require('./routes/bootcamps');
@@ -8,6 +10,15 @@ const bootcamps = require('./routes/bootcamps');
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
+
+//Mount logger
+//app.use(logger);
+
+//We want to run middleware only in Dev env.
+if (process.env.NODE_ENV === 'development') {
+  console.log('test');
+  app.use(morgan('dev'));
+}
 
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
