@@ -16,7 +16,6 @@ const app = express();
 
 //We want to run middleware only in Dev env.
 if (process.env.NODE_ENV === 'development') {
-  console.log('test');
   app.use(morgan('dev'));
 }
 
