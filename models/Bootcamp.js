@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-//const slugify = require('slugify');
-//const geocoder = require('../utils/geocoder');
+const slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 //datas that doesn't defined at schema in model will not be added into database although it is existed in request.
 const BootcampSchema = new mongoose.Schema(
@@ -113,5 +113,30 @@ const BootcampSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+//Create bootcamp slug from the name
+BootcampSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+//Geocode & Location field
+BootcampSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    state: loc[0].stateCode,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
+
+  //We don't want to save unformatted address to the database
+  this.address = undefined;
+  next();
+});
 
 module.exports = mongoose.model('Bootcamp', BootcampSchema);

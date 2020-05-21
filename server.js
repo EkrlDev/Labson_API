@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error');
 
 //In order to use those config files we need to load env vars
 dotenv.config({ path: './config/config.env' });
@@ -29,6 +30,9 @@ if (process.env.NODE_ENV === 'development') {
 
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+
+//Error handler must be declared under routers so it can catch the errors
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
