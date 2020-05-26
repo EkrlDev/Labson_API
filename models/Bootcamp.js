@@ -139,4 +139,21 @@ BootcampSchema.pre('save', async function (next) {
   next();
 });
 
+//We add an mongoose middleware here to delete courses, when a bootcamp deleted which those courses belong to
+BootcampSchema.pre('remove', async function (next) {
+  console.log(`Courses being removed from bootcamp ${this._id}`);
+  await this.model('Course').deleteMany({ bootcamp: this._id });
+  next();
+});
+
+//We have to add virtuals on the schema
+//reverse populate with the virtuals
+BootcampSchema.virtual('courses', {
+  //we could give any name but courses ok
+  ref: 'Course', //the model which we want to use as refereance
+  localField: '_id',
+  foreignField: 'bootcamp', //field that we used at populate in Bootcamp model.
+  justOne: false, //we want to get array
+});
+
 module.exports = mongoose.model('Bootcamp', BootcampSchema);
