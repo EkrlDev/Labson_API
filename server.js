@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 
@@ -17,11 +18,15 @@ connectDB();
 //Initialise Routing files
 const bootcamps = require('./routes/bootcamps');
 const courses = require('./routes/courses');
+const auth = require('./routes/auth');
 
 const app = express();
 
 //Body parser. No longer do we have to use seperate body parser we handle it in express
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 //Mount logger
 //app.use(logger);
@@ -40,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
+app.use('/api/v1/auth', auth);
 
 //Error handler must be declared under routers so it can catch the errors
 app.use(errorHandler);
