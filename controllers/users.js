@@ -56,7 +56,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc         Delete User
+// @desc         Delete  a User
 // @route        POST /api/v1/auth/users/:id
 // @access       Private/Admin
 exports.deleteUser = asyncHandler(async (req, res, next) => {
