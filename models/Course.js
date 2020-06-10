@@ -36,6 +36,11 @@ const CourseSchema = new mongoose.Schema({
     ref: 'Bootcamp',
     required: true,
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 //for creating relationship with a bootcamp we defined a bootcamp property above because every course must belong to a bootcamp
